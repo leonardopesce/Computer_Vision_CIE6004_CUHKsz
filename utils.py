@@ -8,11 +8,22 @@ import scipy.sparse
 import scipy.linalg
 from skimage.segmentation import find_boundaries
 
-def setup_variables(mask):
+def setup_variables(mask, is_tilying = False):
     height, width = mask.shape[:2]
 
-    _, mask = cv2.threshold(mask, 0.5, 1, cv2.THRESH_BINARY) # fix here
-    inner_mask, boundary_mask = process_mask(mask)
+    if is_tilying:
+        # create a full mask
+        mask = np.ones((height, width))
+        # create a boundary mask
+        boundary_mask = np.ones((height, width))
+        boundary_mask[np.ix_(np.arange(1, height - 1), np.arange(1, width - 1))] = 0
+        # create an inner mask
+        inner_mask = mask - boundary_mask
+    else:
+        # convert mask to binary
+        _, mask = cv2.threshold(mask, 0.5, 1, cv2.THRESH_BINARY)
+        # create an inner mask and boundary mask 
+        inner_mask, boundary_mask = process_mask(mask)
 
     pixel_ids, inner_ids, boundary_ids, mask_ids = get_ids(mask, inner_mask, boundary_mask)
 
@@ -85,36 +96,27 @@ def compute_gradient(img, forward=True):
     return Gx, Gy
 
 def get_pixel_ids(img):
-    pixel_ids = np.arange(img.shape[0] * img.shape[1]).reshape(img.shape[0], img.shape[1])
-    return pixel_ids
+    return np.arange(img.shape[0] * img.shape[1]).reshape(img.shape[0], img.shape[1])
 
 def get_masked_values(values, mask):
     assert values.shape[:2] == mask.shape
-    if len(values.shape) == 3:
-        nonzero_idx = np.array([np.nonzero((mask)) for i in range(values.shape[2])]) # get mask 1
-    else:
-        nonzero_idx = np.nonzero(mask) # get mask 1
+    nonzero_idx = np.nonzero(mask)
     return values[nonzero_idx]
 
-def get_alpha_blended_img(src, target, alpha_mask):
+def get_alpha_blended(src, target, alpha_mask):
     return src * alpha_mask + target * (1 - alpha_mask)
-
-def dilate_img(img, k):
-    kernel = np.ones((k, k), np.uint8)
-    return cv2.dilate(img, kernel, iterations = 1)
 
 def create_matrix_A(mask_ids, inner_ids, boundary_ids, inner_pos, boundary_pos, width):
     A = scipy.sparse.lil_matrix((len(mask_ids), len(mask_ids)))
 
+    # find indices of "neighbors" to construct A
     n1_pos = np.searchsorted(mask_ids, inner_ids - 1)
     n2_pos = np.searchsorted(mask_ids, inner_ids + 1)
     n3_pos = np.searchsorted(mask_ids, inner_ids - width)
     n4_pos = np.searchsorted(mask_ids, inner_ids + width)
 
-    A[inner_pos, n1_pos] = A[inner_pos, n2_pos] = A[inner_pos, n3_pos] = A[inner_pos, n4_pos] = 1
+    A[inner_pos, n1_pos] = A[inner_pos, n2_pos] = A[inner_pos, n3_pos] = A[inner_pos, n4_pos] = A[boundary_pos, boundary_pos] = 1
     A[inner_pos, inner_pos] = -4 
-
-    A[boundary_pos, boundary_pos] = 1
     return A.tocsr()
 
 def get_ids(mask, inner_mask, boundary_mask):
