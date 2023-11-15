@@ -15,16 +15,17 @@ from data_aug import base64_2_mask, mask_2_base64, padding, Normalize_Img, Anti_
 
 
 class Human(data.Dataset): 
-    def __init__(self, exp_args):
+    def __init__(self, exp_args, eval=False):
         self.exp_args = exp_args
         
         self.datasets = {}
         self.imagelist = []
 
-        ImageRoot = 'data\EG1800\Images\\'
-        AnnoRoot = 'data\EG1800\Labels\\'
-        ImgIds_Train = 'data\eg1800_train.txt'
-        ImgIds_Test = 'data\eg1800_test.txt'
+        pred = '/content/drive/My Drive/PotraitNet/data'
+        ImageRoot = pred + '/EG1800/Images/'
+        AnnoRoot = pred + '/EG1800/Labels/'
+        ImgIds_Train = pred + '/eg1800_train.txt'
+        ImgIds_Test = pred + ('/eg1800_test.txt' if not eval else "/eg1800_eval.txt")
         exp_args.dataset = 'eg1800'
         self.datasets['eg1800'] = PortraitSeg(ImageRoot, AnnoRoot, ImgIds_Train, ImgIds_Test, self.exp_args)
 

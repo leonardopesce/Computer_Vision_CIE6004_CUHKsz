@@ -4,7 +4,7 @@ import numpy as np
 from DepthwiseSeperableCNN import *
 
 class PotraitNet(nn.Module):
-    def __init__(self, channelRatio=1.0, minChannel=16, weightInit=True):
+    def __init__(self, channelRatio=1.0, minChannel=16):
         super(PotraitNet, self).__init__()
 
         self.minChannel = 16

@@ -1,0 +1,77 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\input{additionalPreamble}
+
+\begin{document} 
+
+\input{Chapters/00_Title}
+\input{Chapters/01_Abstract}
+\input{Chapters/02_Introduction}
+\input{Chapters/03_Model}
+\input{Chapters/04_Results}
+\input{Chapters/05_Conclusions}
+\bibliographystyle{IEEEtran}
+\bibliography{export}
+
+\end{document}
+
+% EXAMPLE OF PSEUDOCODE
+\begin{algorithm}[H]
+    \caption{pseudocode for illumination change}\label{alg:cap}
+    \begin{algorithmic}
+        \State compute matrix A (Discrete Poisson equation)
+        \For{number of color channels in picture}
+        \State change the image to the log domain
+        \State compute $\nabla f$ and $|\nabla f|$
+        \State compute $\alpha$ and $\beta$
+        \State $\mathbf{v} = \alpha^\beta|\nabla f^*|^{-\beta}\nabla f^*$
+        \State construct vector b with $\mathbf{v}$
+        \State compute the solution to $Ax=b$
+        \State revert the image to the original domain
+        \EndFor
+        \State reconstruct the image from the solutions
+    \end{algorithmic}
+\end{algorithm}
+
+
+
+
+%EXAMPLE OF MULTIPLE (3) IMAGE IN LINE (HALF COLUMN)
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\linewidth}
+        \centering
+        \includegraphics[width=0.98\linewidth]{media/illumination_changes/source_light.jpg}
+        \caption{source image}
+        \label{fig:enter-label}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\linewidth}
+        \centering
+        \includegraphics[width=0.98\linewidth]{media/illumination_changes/mask_light.jpg}
+        \caption{mask image}
+        \label{fig:enter-label}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.32\linewidth}
+        \centering
+        \includegraphics[width=0.98\linewidth]{media/illumination_changes/result.png}
+        \caption{result image}
+        \label{fig:enter-label}
+    \end{subfigure}
+    \label{fig2}
+\end{figure}
+
+

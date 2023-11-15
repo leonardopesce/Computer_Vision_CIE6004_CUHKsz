@@ -1,0 +1,7 @@
+\section{Introduction}
+The paper discusses the growing importance of real-time portrait segmentation, driven by the demand for mobile applications that enable background editing of portrait images. It highlights the challenges posed by the unique characteristics of portrait images, such as the need for precise segmentation in the presence of ambiguous boundaries and varying illumination conditions. Existing methods have prioritized accuracy over efficiency, making them unsuitable for real-time mobile applications.
+
+To address these challenges, the authors propose PortraitNet, a specialized convolutional neural network designed for real-time portrait segmentation on mobile devices. PortraitNet utilizes a specific network architecture with a 32× down-sampling rate to enhance efficiency and employs a U-shape architecture for better segmentation. The network is trained using auxiliary losses, including a boundary loss to improve boundary accuracy and a consistency constraint loss to enhance robustness under varying illumination.
+
+The results demonstrate that PortraitNet achieves high accuracy, with 96.62\% accuracy on the EG1800 dataset and 93.43\% on the SupervisePortrait dataset. Furthermore, it can process images at 30 frames per second on an iPhone 7 with an input size of 224 × 224, making it suitable for real-time mobile portrait segmentation.
+
