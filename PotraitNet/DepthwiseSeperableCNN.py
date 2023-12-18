@@ -14,7 +14,7 @@ class InvertedResidual(nn.Module):
         layers = []
 
         # Pointwise convolution (1x1)
-        layers.append(nn.Conv2d(in_channels, hidden_dim, kernel_size=1, bias=False))
+        layers.append(nn.Conv2d(in_channels, hidden_dim, kernel_size=1, stride=1, padding=0, bias=False))
         layers.append(nn.BatchNorm2d(hidden_dim))
         layers.append(nn.ReLU6(inplace=True))
 
@@ -24,7 +24,7 @@ class InvertedResidual(nn.Module):
         layers.append(nn.ReLU6(inplace=True))
 
         # Pointwise convolution (1x1)
-        layers.append(nn.Conv2d(hidden_dim, out_channels, kernel_size=1, bias=False))
+        layers.append(nn.Conv2d(hidden_dim, out_channels, kernel_size=1, stride=1, padding=0, bias=False))
         layers.append(nn.BatchNorm2d(out_channels))
 
         self.conv = nn.Sequential(*layers)
