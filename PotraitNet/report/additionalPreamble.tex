@@ -1,0 +1,45 @@
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\selectlanguage{english}
+
+
+\usepackage[per-mode=symbol]{siunitx}
+\usepackage[nolist,nohyperlinks]{acronym}
+\usepackage{wrapfig}
+
+\usepackage{xspace}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink, capitalise]{cleveref}
+
+% correct bad hyphenation here
+\hyphenation{} %\hyphenation{win-dow net-works com-pu-ter} 
+
+\newcommand{\mycomment}[1]{{\color{red}#1}}
+\newcommand{\toremove}[1]{{\color{lightgray}#1}}
+\newcommand{\newtext}[1]{{\color{blue}#1}}
+%\newcommand{\removable}[1]{{\color{green}#1}}
+\newcommand{\removable}[1]{{#1}}
+ 
+\Crefname{figure}{Fig.}{Figs.} %Required by IEEE style
+% \renewcommand\figurename{Fig.} %Required by IEEE style (without babel)
+\addto\captionsenglish{\renewcommand{\figurename}{Fig.}} %Required by IEEE style (with babel)
+
+\DeclareSIUnit\bpm{bpm}
+\DeclareSIUnit\spm{spm}
+
+\begin{acronym}
+%   \acro{acronym}[short name]{full name}
+    \acro{EEG}{electroencephalogram}
+    \acro{MEG}{magnetoencephalogram}
+    \acro{AMS}{Auditory-Motor Synchronization}
+    \acro{bpm}[\unit{bpm}]{beats per minute}
+    \acro{spm}[\unit{spm}]{steps per minute}
+\end{acronym}
+
+\newcommand{\ralcoach}{RALCoach\xspace}
+
+%\usepackage[%
+ %   text={Extended Abstract},%
+ %   scale=0.7,%
+ %   color={[rgb]{0.8, 0.1, 0.1}}%
+  %  ]{draftwatermark}
