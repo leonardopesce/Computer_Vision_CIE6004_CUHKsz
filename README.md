@@ -1,4 +1,6 @@
-Project of the course _Computer Vision CIE6004 Chinese University of Hong Konk Shenzhen_.
+# Computer Vision CIE6004 project
+
+Project of the course _Computer Vision CIE6004 Chinese University of Hong Konk Shenzhen 2023_.
 
 Implementation of multiple Computer Vision algorithms PotraintNet, Poisson Image Editing, and PCPNet. 
 
